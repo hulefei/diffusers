@@ -176,3 +176,9 @@ tags
 
 # wandb
 wandb
+
+# lefeihu
+examples/lefeihu/output_image.png
+examples/lefeihu/class_images/
+examples/lefeihu/my_concept/
+examples/lefeihu/dreambooth-concept/
