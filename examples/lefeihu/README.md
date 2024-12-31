@@ -1,6 +1,23 @@
 # README
 
-## 安装python库
+## Docker 方式
+
+### build
+
+```mermaid
+docker build -t dreambooth:latest .
+```
+
+### run
+```mermaid
+docker run 
+    -v /cfs/.cache/huggingface/hub:/cfs/.cache/huggingface/hub 
+    --runtime=nvidia dreambooth:latest 
+    python helloworld2.py
+```
+
+## Conda 方式
+### 安装python库
 
 ```ipynb
 #@title Install the required libs
@@ -16,4 +33,8 @@
 
 !pip install -U --pre triton
 !pip install -U xformers --index-url https://download.pytorch.org/whl/cu121
+```
+
+```mermaid
+pip install sentencepiece
 ```

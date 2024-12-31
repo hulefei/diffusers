@@ -18,7 +18,7 @@ import torch
 from diffusers import StableDiffusionPipeline
 
 # pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float16)
-pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2", torch_dtype=torch.float16)
+pipe = StableDiffusionPipeline.from_pretrained("hulefei/cat-toy", torch_dtype=torch.float16)
 pipe = pipe.to("cuda")
 
 prompt = "a <cat-toy> in mad max fury road"
