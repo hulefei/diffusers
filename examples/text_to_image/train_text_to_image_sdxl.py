@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
-# Copyright 2024 The HuggingFace Inc. team. All rights reserved.
+# Copyright 2025 The HuggingFace Inc. team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -919,7 +919,7 @@ def main(args):
         # fingerprint used by the cache for the other processes to load the result
         # details: https://github.com/huggingface/diffusers/pull/4038#discussion_r1266078401
         new_fingerprint = Hasher.hash(args)
-        new_fingerprint_for_vae = Hasher.hash(vae_path)
+        new_fingerprint_for_vae = Hasher.hash((vae_path, args))
         train_dataset_with_embeddings = train_dataset.map(
             compute_embeddings_fn, batched=True, new_fingerprint=new_fingerprint
         )
@@ -1241,7 +1241,11 @@ def main(args):
                 pipeline.set_progress_bar_config(disable=True)
 
                 # run inference
-                generator = torch.Generator(device=accelerator.device).manual_seed(args.seed) if args.seed else None
+                generator = (
+                    torch.Generator(device=accelerator.device).manual_seed(args.seed)
+                    if args.seed is not None
+                    else None
+                )
                 pipeline_args = {"prompt": args.validation_prompt}
 
                 with autocast_ctx:
@@ -1305,7 +1309,9 @@ def main(args):
         images = []
         if args.validation_prompt and args.num_validation_images > 0:
             pipeline = pipeline.to(accelerator.device)
-            generator = torch.Generator(device=accelerator.device).manual_seed(args.seed) if args.seed else None
+            generator = (
+                torch.Generator(device=accelerator.device).manual_seed(args.seed) if args.seed is not None else None
+            )
 
             with autocast_ctx:
                 images = [
